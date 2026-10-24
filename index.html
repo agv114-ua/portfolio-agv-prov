@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080a10">
+  <meta name="description" content="Portfolio de Ángel Gonjar Verdejo. Desarrollo de software, Java, Spring Boot, Unity y proyectos colaborativos.">
+  <meta property="og:title" content="Ángel Gonjar Verdejo — Software & Interactive Worlds">
+  <meta property="og:description" content="Un recorrido por proyectos, código y mundos interactivos.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>Ángel Gonjar Verdejo — Portfolio</title>
+  <style>
+    :root {
+      --site-primary: #ff765f;
+      --site-on-primary: #160b08;
+      --site-secondary: #83cbbb;
+      --site-on-secondary: #08110f;
+      --site-background: #080a10;
+      --site-on-background: #f2eee7;
+      --site-font-body: Inter, "Segoe UI", Arial, sans-serif;
+      --site-font-heading: "Arial Narrow", "Segoe UI", Arial, sans-serif;
+      --site-heading-scale: 1;
+      --site-spacing-scale: 1;
+      --site-radius-scale: 1;
+      --site-decoration-opacity: 1;
+      --paper: #f2eee7;
+      --muted: #a9a9b0;
+      --dim: #6d717b;
+      --line: rgba(242, 238, 231, .18);
+      --panel: #11151d;
+      --panel-2: #171c26;
+      --coral: var(--site-primary);
+      --mint: var(--site-secondary);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; background: var(--site-background); }
+    body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); line-height: 1.5; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { max-width: 100%; display: block; }
+    ::selection { color: #120b09; background: var(--coral); }
+    .site-root { width: 100%; min-height: 100vh; background-color: var(--site-background); color: var(--site-on-background); overflow: clip; border-radius: 0; }
+    .skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 1000; padding: .7rem 1rem; background: var(--coral); color: #16100d; }
+    .skip-link:focus { top: 1rem; }
+    .progress-bar { position: fixed; z-index: 90; top: 0; left: 0; height: 3px; width: 100%; pointer-events: none; }
+    .progress-bar span { display: block; width: 0; height: 100%; background: var(--coral); box-shadow: 0 0 16px rgba(255,118,95,.6); }
+    .site-header { position: fixed; z-index: 80; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem clamp(1.2rem, 4.5vw, 4.8rem); border-bottom: 1px solid rgba(242,238,231,.13); background: linear-gradient(180deg, rgba(5,7,12,.85), rgba(5,7,12,.15)); backdrop-filter: blur(12px); }
+    .brand { display: flex; align-items: center; gap: .8rem; font-weight: 800; letter-spacing: .12em; font-size: .88rem; }
+    .brand-mark { width: 2.25rem; height: 2.25rem; display: grid; place-items: center; border: 1px solid rgba(255,118,95,.75); color: var(--coral); transform: rotate(-45deg); font-size: .82rem; }
+    .brand-mark span { transform: rotate(45deg); }
+    .brand-copy { line-height: 1.1; }
+    .brand-copy small { display: block; margin-top: .3rem; color: var(--muted); font-size: .58rem; font-weight: 500; letter-spacing: .16em; }
+    .nav-links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.4rem); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(242,238,231,.8); }
+    .nav-links a { position: relative; padding: .35rem 0; transition: color .2s ease; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--coral); transition: right .25s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--paper); }
+    .nav-links a:hover::after, .nav-links a:focus-visible::after { right: 0; }
+    .nav-contact { border: 1px solid rgba(242,238,231,.36); padding: .62rem .9rem !important; }
+    .nav-contact::after { display: none; }
+    .nav-toggle { display: none; border: 1px solid var(--line); color: var(--paper); background: rgba(13,16,23,.8); padding: .55rem .75rem; }
+
+    .eyebrow { display: flex; align-items: center; gap: .7rem; color: var(--coral); font-size: .67rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+    .eyebrow::before { content: ""; display: inline-block; width: 2rem; height: 1px; background: currentColor; }
+    .display-title { margin: 0; font-family: var(--site-font-heading); font-size: clamp(3.4rem, 7.5vw, 8.7rem); font-stretch: condensed; line-height: .88; letter-spacing: -.055em; font-weight: 900; text-transform: uppercase; }
+    .accent { color: var(--coral); }
+    .italic { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; letter-spacing: -.065em; text-transform: none; }
+    .micro { color: var(--muted); font: 600 .62rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    .section-label { color: var(--muted); font: 600 .65rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .13em; text-transform: uppercase; }
+    .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+    .journey-actions { margin-top: 1.35rem; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: .8rem; min-height: 3.1rem; padding: .9rem 1.15rem; border: 1px solid rgba(242,238,231,.34); color: var(--paper); background: rgba(10,13,19,.5); text-transform: uppercase; letter-spacing: .12em; font-size: .64rem; font-weight: 800; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease; }
+    .button:hover, .button:focus-visible { border-color: var(--coral); color: #120b09; background: var(--coral); transform: translateY(-2px); }
+    .button-primary { background: var(--coral); color: #160b08; border-color: var(--coral); }
+    .button-primary:hover, .button-primary:focus-visible { background: #ff9580; border-color: #ff9580; }
+    .button svg { width: .9rem; height: .9rem; }
+    .muted-copy { color: var(--muted); }
+    .section-padding { padding-inline: clamp(1.25rem, 7vw, 7.4rem); }
+    .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+    .side-index { position: fixed; z-index: 70; right: clamp(1rem, 3.2vw, 3.2rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: .8rem; align-items: center; color: var(--muted); font: 600 .55rem ui-monospace, monospace; }
+    .side-index span { display: block; width: 4px; height: 4px; border-radius: 50%; background: #5e626c; transition: all .25s ease; }
+    .side-index span.active { height: 22px; border-radius: 8px; background: var(--coral); }
+    .decorative { opacity: var(--site-decoration-opacity); pointer-events: none; }
+
+    /* Opening scene: the viewport is pinned while the landscape moves in depth. */
+    .hero-track { position: relative; height: 190svh; min-height: 1250px; }
+    .hero-stage { position: sticky; top: 0; height: 100svh; min-height: 650px; overflow: hidden; isolation: isolate; background: #080a10; }
+    .hero-landscape { position: absolute; z-index: -3; inset: -5%; background: url("assets/hero-coast.webp") center 57% / cover no-repeat; transform: scale(1.08); will-change: transform; filter: saturate(.8) brightness(.88); }
+    .hero-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(5,7,13,.92) 0%, rgba(5,7,13,.66) 40%, rgba(5,7,13,.14) 78%, rgba(5,7,13,.18) 100%), linear-gradient(0deg, #080a10 0%, rgba(8,10,16,.08) 38%, rgba(8,10,16,.34) 100%); }
+    .hero-grid { position: absolute; z-index: -1; inset: 0; opacity: .17; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 9vw 9vw; mask-image: linear-gradient(90deg, black, transparent 83%); }
+    .hero-orb { position: absolute; z-index: -1; width: 39vw; height: 39vw; min-width: 320px; min-height: 320px; border-radius: 50%; border: 1px solid rgba(255,222,190,.25); right: -7vw; top: 10%; box-shadow: 0 0 0 28px rgba(255,255,255,.018), 0 0 0 76px rgba(255,255,255,.015); }
+    .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(190px, 24%); align-items: end; height: 100%; padding: clamp(7rem, 14vh, 10rem) clamp(1.25rem, 7vw, 7.4rem) clamp(5rem, 10vh, 8.5rem); gap: 3rem; }
+    .hero-main { max-width: 1050px; }
+    .hero-main .eyebrow { margin-bottom: 1.65rem; }
+    .hero-title { max-width: 1050px; font-size: clamp(3.25rem, 7.3vw, 8.5rem); }
+    .hero-title .second-line { display: block; color: var(--coral); }
+    .hero-intro { margin: 1.65rem 0 2.1rem; max-width: 590px; font-size: clamp(1rem, 1.3vw, 1.2rem); color: rgba(242,238,231,.83); }
+    .hero-intro strong { color: var(--paper); font-weight: 700; }
+    .hero-side { align-self: center; padding-top: 7rem; }
+    .coordinates { display: flex; flex-direction: column; gap: 1.05rem; border-left: 1px solid rgba(255,255,255,.37); padding-left: 1.1rem; }
+    .coordinates div { display: flex; flex-direction: column; gap: .23rem; }
+    .coordinates b { color: var(--paper); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; }
+    .coordinates span { color: var(--muted); font-size: .8rem; }
+    .hero-bottom { position: absolute; left: clamp(1.25rem, 7vw, 7.4rem); right: clamp(1.25rem, 7vw, 7.4rem); bottom: 1.4rem; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: rgba(242,238,231,.65); font: 600 .56rem ui-monospace, monospace; letter-spacing: .15em; text-transform: uppercase; }
+    .scroll-cue { display: flex; align-items: center; gap: .7rem; }
+    .scroll-cue i { display: inline-block; width: 1px; height: 2.2rem; background: var(--coral); animation: scrollPulse 1.7s infinite ease-in-out; transform-origin: top; }
+    @keyframes scrollPulse { 0%,100% { transform: scaleY(.45); opacity: .5; } 50% { transform: scaleY(1); opacity: 1; } }
+    .hero-track::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 26vh; background: linear-gradient(transparent, var(--site-background)); pointer-events: none; }
+
+    /* Narrative scroll: one pinned screen, three chapters. */
+    .journey-track { position: relative; height: 330svh; background: var(--site-background); }
+    .journey-stage { position: sticky; top: 0; height: 100svh; min-height: 640px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(2rem, 8vw, 8rem); padding: 6rem clamp(1.25rem, 7vw, 7.4rem) 4rem; overflow: hidden; isolation: isolate; }
+    .journey-stage::before { content: ""; position: absolute; z-index: -2; inset: 0; opacity: .45; background: radial-gradient(ellipse at 80% 44%, rgba(255,118,95,.12), transparent 41%), radial-gradient(ellipse at 15% 70%, rgba(131,203,187,.07), transparent 36%); }
+    .journey-left { max-width: 610px; }
+    .section-heading { margin: 1.3rem 0 1rem; font-size: clamp(2.2rem, 4.8vw, 5.3rem); line-height: .98; font-weight: 850; letter-spacing: -.06em; text-transform: uppercase; }
+    .section-heading em { color: var(--coral); font-family: Georgia, serif; font-weight: 400; letter-spacing: -.05em; text-transform: none; }
+    .journey-copy { margin: 1.5rem 0 1.9rem; color: var(--muted); max-width: 510px; font-size: .98rem; }
+    .journey-data { display: grid; grid-template-columns: 1fr 1fr; max-width: 420px; border-top: 1px solid var(--line); margin-top: 1.4rem; }
+    .journey-data div { padding: .85rem 1rem .85rem 0; }
+    .journey-data div + div { border-left: 1px solid var(--line); padding-left: 1rem; }
+    .journey-data b { display: block; font-size: .95rem; }
+    .journey-data span { color: var(--muted); font-size: .68rem; }
+    .journey-art { position: relative; min-height: min(65vh, 660px); display: grid; place-items: center; perspective: 1000px; }
+    .route-geometry { position: absolute; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 22px rgba(255,118,95,.08)); }
+    .route-line { fill: none; stroke: rgba(255,118,95,.65); stroke-width: 1.4; stroke-dasharray: 4 5; }
+    .route-line-glow { fill: none; stroke: rgba(255,118,95,.24); stroke-width: 14; }
+    .route-node { fill: #0b0f17; stroke: var(--coral); stroke-width: 2; }
+    .route-node.active { fill: var(--coral); stroke: #ffe4d8; }
+    .route-label { fill: rgba(242,238,231,.74); font: 600 10px ui-monospace, monospace; letter-spacing: 1.3px; }
+    .route-card { position: absolute; width: min(75%, 350px); min-height: 230px; border: 1px solid rgba(242,238,231,.2); background: linear-gradient(140deg, rgba(21,26,36,.91), rgba(8,10,16,.7)); backdrop-filter: blur(12px); padding: clamp(1.15rem, 2.2vw, 2rem); box-shadow: 0 20px 70px rgba(0,0,0,.3); transform: rotateY(-8deg) rotateX(2deg); transition: opacity .4s, transform .6s cubic-bezier(.2,.7,.2,1); }
+    .route-card .card-number { display: flex; justify-content: space-between; color: var(--coral); font: 600 .62rem ui-monospace, monospace; letter-spacing: .14em; }
+    .route-card h3 { font-size: 1.55rem; margin: 2rem 0 .5rem; text-transform: uppercase; letter-spacing: -.04em; }
+    .route-card p { color: var(--muted); font-size: .85rem; margin: 0; }
+    .route-card::after { content: ""; position: absolute; width: 4rem; height: 4rem; top: -1px; right: -1px; border-top: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+    .journey-steps { position: absolute; inset: 0; pointer-events: none; }
+    .journey-step { position: absolute; width: 1px; height: 1px; }
+    .journey-step:nth-child(1) { top: 15%; } .journey-step:nth-child(2) { top: 48%; } .journey-step:nth-child(3) { top: 82%; }
+    .journey-footer { position: absolute; bottom: 1.35rem; left: clamp(1.25rem, 7vw, 7.4rem); right: clamp(1.25rem, 7vw, 7.4rem); display: flex; align-items: center; justify-content: space-between; color: var(--muted); font: 600 .6rem ui-monospace, monospace; text-transform: uppercase; letter-spacing: .16em; }
+    .chapter-count { color: var(--paper); }
+
+    /* Projects: each scroll chapter changes the pinned artwork and project details. */
+    .projects-track { position: relative; height: 500svh; background: #0c0e14; }
+    .projects-stage { position: sticky; top: 0; height: 100svh; min-height: 690px; overflow: hidden; display: grid; grid-template-columns: minmax(190px, 24%) 1fr; gap: clamp(1.3rem, 4vw, 4.6rem); align-items: center; padding: 6rem clamp(1.25rem, 5.8vw, 6rem) 4rem clamp(1.25rem, 7vw, 7.4rem); isolation: isolate; }
+    .projects-stage::before { content: ""; position: absolute; z-index: -4; inset: 0; background: radial-gradient(ellipse at 65% 30%, rgba(255,118,95,.12), transparent 40%), linear-gradient(120deg,#0b0d13,#111520 67%,#0a0c12); }
+    .project-rail { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: .4rem; min-width: 0; }
+    .project-rail .eyebrow { margin-bottom: 1.3rem; }
+    .project-switches { display: flex; flex-direction: column; }
+    .project-rail h2 { margin: 0 0 1.8rem; max-width: 340px; font-size: clamp(2.3rem, 4.3vw, 4.9rem); line-height: .88; letter-spacing: -.075em; text-transform: uppercase; }
+    .project-switch { display: grid; grid-template-columns: 2rem 1fr auto; align-items: center; gap: .7rem; width: 100%; border: 0; border-top: 1px solid rgba(242,238,231,.12); padding: .95rem 0; color: #8d929c; background: transparent; text-align: left; font-size: .78rem; cursor: pointer; transition: color .25s ease; }
+    .project-switch:last-of-type { border-bottom: 1px solid rgba(242,238,231,.12); }
+    .project-switch .switch-number { font: 600 .62rem ui-monospace, monospace; color: var(--dim); }
+    .project-switch .switch-arrow { opacity: 0; color: var(--coral); transition: opacity .2s, transform .2s; }
+    .project-switch.active, .project-switch:hover, .project-switch:focus-visible { color: var(--paper); }
+    .project-switch.active .switch-number { color: var(--coral); }
+    .project-switch.active .switch-arrow, .project-switch:hover .switch-arrow, .project-switch:focus-visible .switch-arrow { opacity: 1; transform: translateX(2px); }
+    .project-rail-note { margin-top: 1.25rem; color: var(--dim); font: 600 .58rem ui-monospace, monospace; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; }
+    .project-detail { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, .85fr); gap: clamp(1.3rem, 3.5vw, 3.5rem); align-items: center; min-width: 0; }
+    .project-visual-wrap { position: relative; min-width: 0; transform-style: preserve-3d; perspective: 1200px; }
+    .project-visual { position: relative; overflow: hidden; min-height: 390px; height: min(58vh, 610px); border: 1px solid rgba(242,238,231,.18); background: #161c27; box-shadow: 0 35px 85px rgba(0,0,0,.3); transform: rotateY(-4deg) rotateX(1deg); transition: transform .6s cubic-bezier(.2,.7,.2,1), background .4s; }
+    .project-visual[data-art-theme="chaos"] { background: #170d21; }
+    .project-visual[data-art-theme="agua"] { background: #071d2b; }
+    .project-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.2s cubic-bezier(.2,.7,.2,1), opacity .5s; }
+    .project-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5,7,12,.75), transparent 45%), linear-gradient(90deg, rgba(5,7,12,.16), transparent); pointer-events: none; }
+    .visual-topline { position: absolute; z-index: 2; top: 1.2rem; left: 1.2rem; right: 1.2rem; display: flex; justify-content: space-between; gap: .8rem; color: rgba(242,238,231,.86); font: 600 .57rem ui-monospace, monospace; letter-spacing: .13em; text-transform: uppercase; }
+    .visual-bottomline { position: absolute; z-index: 2; left: 1.2rem; right: 1.2rem; bottom: 1.2rem; display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+    .visual-bottomline b { display: block; max-width: 320px; font-size: clamp(1.4rem, 3vw, 3.25rem); line-height: .93; letter-spacing: -.06em; text-transform: uppercase; }
+    .visual-bottomline span { color: rgba(242,238,231,.7); font: 600 .57rem ui-monospace, monospace; letter-spacing: .13em; text-align: right; }
+    .visual-art { position: absolute; inset: 0; overflow: hidden; transition: opacity .3s ease; }
+    .art-chaos { background: radial-gradient(circle at 70% 20%, rgba(255,81,110,.48), transparent 21%), radial-gradient(circle at 27% 84%, rgba(100,70,255,.35), transparent 30%), linear-gradient(150deg,#170d21,#12182a 58%,#361824); }
+    .art-chaos::before { content: ""; position: absolute; inset: 10% 7%; border: 1px solid rgba(255,154,136,.35); transform: rotate(-7deg) skewY(2deg); box-shadow: 16px 17px 0 rgba(255,118,95,.07), 32px 34px 0 rgba(255,118,95,.04); }
+    .art-chaos::after { content: "CC"; position: absolute; right: 3%; bottom: -12%; font-size: clamp(12rem, 28vw, 32rem); line-height: .8; letter-spacing: -.16em; color: rgba(255,118,95,.15); font-weight: 900; }
+    .art-water { background: radial-gradient(ellipse at 55% 45%, rgba(70,205,215,.44), transparent 22%), linear-gradient(145deg,#071d2b,#0b3440 55%,#141827); }
+    .water-rings { position: absolute; width: 120%; aspect-ratio: 1; left: -5%; top: -19%; border: 1px solid rgba(131,220,222,.35); border-radius: 50%; box-shadow: 0 0 0 33px rgba(131,220,222,.07), 0 0 0 67px rgba(131,220,222,.05), 0 0 0 100px rgba(131,220,222,.04), 0 0 0 145px rgba(131,220,222,.025); }
+    .water-drop { position: absolute; top: 20%; right: 20%; width: clamp(6rem,14vw,12rem); aspect-ratio: .78; border-radius: 70% 30% 62% 38% / 63% 37% 63% 37%; border: 1px solid rgba(131,220,222,.65); background: linear-gradient(135deg,rgba(131,220,222,.2),rgba(131,220,222,.02)); transform: rotate(45deg); box-shadow: inset 10px 0 25px rgba(131,220,222,.12),0 0 80px rgba(131,220,222,.12); }
+    .project-copy { min-width: 0; padding: .4rem 0; }
+    .project-kicker { color: var(--coral); font: 600 .62rem ui-monospace, monospace; letter-spacing: .15em; text-transform: uppercase; }
+    .project-copy h3 { margin: .9rem 0 1rem; font-size: clamp(2.8rem, 5.2vw, 6.3rem); line-height: .83; letter-spacing: -.075em; text-transform: uppercase; font-weight: 900; overflow-wrap: anywhere; }
+    .project-subtitle { margin: 0 0 1.1rem; color: var(--mint); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+    .project-summary { margin: 0; max-width: 470px; color: rgba(242,238,231,.72); font-size: clamp(.88rem,1vw,1rem); line-height: 1.75; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.35rem 0 1.7rem; }
+    .project-tags span { border: 1px solid rgba(242,238,231,.18); padding: .45rem .6rem; color: #c9cbd1; font: 600 .58rem ui-monospace, monospace; letter-spacing: .04em; }
+    .project-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .project-personal-note { display: none; margin-top: 1rem; border-left: 2px solid var(--mint); padding: .5rem .8rem; color: var(--muted); font-size: .72rem; }
+    .project-personal-note.visible { display: block; }
+    .project-mobile-step { display: none; }
+    .visual-credit { position: absolute; z-index: 4; top: 3.25rem; right: 1.2rem; color: rgba(242,238,231,.62); font: 600 .52rem ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .project-scroll-hint { position: absolute; bottom: 1.3rem; right: clamp(1.25rem, 5.8vw, 6rem); color: var(--muted); font: 600 .57rem ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+    /* Scrolling technology ribbon. */
+    .toolkit-track { position: relative; height: 190svh; background: var(--paper); color: #17191f; }
+    .toolkit-stage { position: sticky; top: 0; min-height: 100svh; height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: clamp(2rem, 5vh, 4rem); overflow: hidden; padding: 6rem 0 4rem; }
+    .toolkit-heading { padding-inline: clamp(1.25rem, 7vw, 7.4rem); display: grid; grid-template-columns: minmax(0,1fr) minmax(210px, 30%); gap: 2rem; align-items: end; }
+    .toolkit-heading .eyebrow { color: #a74435; }
+    .toolkit-heading h2 { max-width: 800px; margin: 1rem 0 0; font-size: clamp(2.6rem, 6.4vw, 7.2rem); line-height: .84; letter-spacing: -.075em; text-transform: uppercase; }
+    .toolkit-heading p { color: #5e6068; font-size: .88rem; line-height: 1.7; margin: 0 0 .4rem; max-width: 350px; }
+    .toolkit-overflow { padding-block: 1.5rem; border-top: 1px solid rgba(23,25,31,.18); border-bottom: 1px solid rgba(23,25,31,.18); overflow: hidden; transform: rotate(-2deg) scale(1.06); background: #e9e3da; }
+    .toolkit-strip { display: flex; align-items: center; gap: clamp(1.4rem, 4vw, 4rem); width: max-content; will-change: transform; padding-inline: 1.8rem; }
+    .toolkit-word { color: #17191f; font-size: clamp(2.2rem, 5.6vw, 6.3rem); font-weight: 900; letter-spacing: -.08em; text-transform: uppercase; white-space: nowrap; }
+    .toolkit-word:nth-child(odd) { color: #a74435; font-family: Georgia, serif; font-style: italic; font-weight: 400; }
+    .toolkit-dot { width: .65rem; height: .65rem; border-radius: 50%; flex: 0 0 auto; background: #a74435; }
+    .toolkit-footer { padding-inline: clamp(1.25rem, 7vw, 7.4rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #5e6068; font: 600 .62rem ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    .toolkit-footer b { color: #17191f; }
+
+    /* About and contact finale. */
+    .about-section { position: relative; padding: clamp(6rem, 12vh, 10rem) clamp(1.25rem, 7vw, 7.4rem); background: var(--site-background); }
+    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(2rem, 8vw, 8rem); align-items: start; }
+    .about-heading { margin: 1.2rem 0; font-size: clamp(2.8rem, 6vw, 6.5rem); line-height: .86; letter-spacing: -.075em; text-transform: uppercase; }
+    .about-heading em { color: var(--coral); font-family: Georgia, serif; font-weight: 400; text-transform: none; }
+    .about-copy { max-width: 710px; color: rgba(242,238,231,.72); font-size: clamp(1rem, 1.3vw, 1.22rem); line-height: 1.85; }
+    .about-copy strong { color: var(--paper); font-weight: 650; }
+    .about-facts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin-top: 2rem; border-top: 1px solid var(--line); }
+    .about-facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--line); }
+    .about-facts div:nth-child(even) { padding-left: 1rem; border-left: 1px solid var(--line); }
+    .about-facts small { display: block; margin-bottom: .35rem; color: var(--muted); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; }
+    .about-facts b { font-size: .9rem; font-weight: 650; }
+    .contact-section { position: relative; min-height: 76svh; display: flex; flex-direction: column; justify-content: center; padding: clamp(5rem, 10vh, 8rem) clamp(1.25rem, 7vw, 7.4rem); overflow: hidden; background: linear-gradient(125deg,#171a22,#080a10 68%); }
+    .contact-section::before { content: "AGV"; position: absolute; right: -3vw; bottom: -11vw; color: rgba(242,238,231,.035); font-size: clamp(15rem, 45vw, 52rem); letter-spacing: -.14em; line-height: .8; font-weight: 900; pointer-events: none; }
+    .contact-heading { position: relative; z-index: 1; max-width: 1000px; margin: 1.3rem 0 1.5rem; font-size: clamp(3.4rem, 8.6vw, 9.5rem); line-height: .86; font-weight: 900; letter-spacing: -.085em; text-transform: uppercase; }
+    .contact-text { position: relative; z-index: 1; max-width: 490px; color: var(--muted); margin: 0 0 2rem; }
+    .contact-links { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem; position: relative; z-index: 1; }
+    .footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem clamp(1.25rem, 7vw, 7.4rem); border-top: 1px solid var(--line); color: var(--muted); font: 600 .58rem ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .footer a:hover { color: var(--coral); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1050px) {
+      .hero-content { grid-template-columns: 1fr; align-items: end; }
+      .hero-side { display: none; }
+      .journey-stage { grid-template-columns: .95fr 1.05fr; gap: 2rem; }
+      .projects-stage { grid-template-columns: 175px 1fr; padding-left: 2.2rem; }
+      .project-detail { grid-template-columns: minmax(0,1fr) minmax(250px,.85fr); gap: 1.5rem; }
+      .project-visual { min-height: 340px; }
+      .project-copy h3 { font-size: clamp(2.6rem,4vw,4.5rem); }
+    }
+    @media (max-width: 760px) {
+      .site-header { padding: .8rem 1rem; }
+      .brand-copy small { display: none; }
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-links { display: none; position: absolute; top: calc(100% + 1px); right: .75rem; left: .75rem; align-items: stretch; gap: 0; flex-direction: column; padding: .65rem 1rem; background: rgba(9,12,18,.97); border: 1px solid var(--line); backdrop-filter: blur(16px); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: .95rem .25rem; border-bottom: 1px solid rgba(242,238,231,.09); }
+      .nav-contact { margin-top: .4rem; text-align: center; }
+      .side-index { display: none; }
+      .hero-track { height: 150svh; min-height: 950px; }
+      .hero-stage { min-height: 570px; }
+      .hero-landscape { background-position: 63% center; inset: -2%; }
+      .hero-shade { background: linear-gradient(90deg,rgba(5,7,13,.82),rgba(5,7,13,.38)),linear-gradient(0deg,#080a10 0%,transparent 55%,rgba(8,10,16,.25)); }
+      .hero-grid { background-size: 22vw 22vw; }
+      .hero-content { padding: 7rem 1.2rem 6.5rem; }
+      .hero-title { font-size: clamp(3.25rem, 15vw, 6.5rem); }
+      .hero-main .eyebrow { font-size: .57rem; margin-bottom: 1.3rem; }
+      .hero-intro { font-size: .92rem; margin: 1.2rem 0 1.6rem; }
+      .hero-bottom { left: 1.2rem; right: 1.2rem; bottom: 1rem; align-items: end; font-size: .5rem; }
+      .hero-bottom .micro { max-width: 50%; }
+      .button { font-size: .59rem; padding: .8rem .85rem; min-height: 2.8rem; }
+      .journey-track { height: 300svh; }
+      .journey-stage { min-height: 620px; grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-content: center; gap: 0; padding: 6rem 1.2rem 3rem; }
+      .journey-left { position: relative; z-index: 2; }
+      .journey-left .section-heading { font-size: clamp(2.3rem, 10vw, 4rem); max-width: 560px; }
+      .journey-copy { margin: .9rem 0 1rem; font-size: .86rem; }
+      .journey-data { margin-top: .9rem; }
+      .journey-art { min-height: 250px; margin-top: -.4rem; }
+      .route-card { min-height: 150px; width: min(73%, 300px); padding: 1rem; transform: rotateY(-3deg); }
+      .route-card h3 { margin: 1.2rem 0 .3rem; font-size: 1.15rem; }
+      .route-card p { font-size: .72rem; }
+      .route-label { font-size: 8px; }
+      .journey-footer { left: 1.2rem; right: 1.2rem; bottom: .8rem; font-size: .5rem; }
+      .projects-track { height: 470svh; }
+      .projects-stage { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 1rem; min-height: 650px; padding: 5.8rem 1.1rem 3.4rem; }
+      .project-rail { align-self: auto; display: block; }
+      .project-rail .eyebrow { margin-bottom: .65rem; font-size: .54rem; }
+      .project-rail h2 { margin: 0 0 .9rem; font-size: clamp(2rem, 9vw, 3.7rem); }
+      .project-switches { display: flex; gap: .45rem; overflow-x: auto; padding-bottom: .35rem; scrollbar-width: thin; }
+      .project-switch { display: flex; flex: 0 0 auto; width: auto; border: 1px solid rgba(242,238,231,.18) !important; padding: .55rem .65rem; gap: .45rem; font-size: .67rem; }
+      .project-switch .switch-number { display: none; }
+      .project-switch .switch-arrow { display: none; }
+      .project-rail-note { display: none; }
+      .project-detail { display: flex; flex-direction: column; align-items: stretch; gap: 1.1rem; }
+      .project-visual { height: 31svh; min-height: 205px; max-height: 300px; transform: none; }
+      .visual-topline { top: .7rem; left: .7rem; right: .7rem; font-size: .49rem; }
+      .visual-credit { top: 2.3rem; right: .7rem; font-size: .45rem; }
+      .visual-bottomline { left: .7rem; right: .7rem; bottom: .7rem; }
+      .visual-bottomline b { font-size: 1.65rem; }
+      .visual-bottomline span { font-size: .46rem; }
+      .project-copy h3 { margin: .4rem 0 .65rem; font-size: clamp(2.5rem, 12vw, 4.5rem); }
+      .project-kicker { font-size: .54rem; }
+      .project-subtitle { margin-bottom: .6rem; font-size: .63rem; }
+      .project-summary { font-size: .82rem; line-height: 1.6; }
+      .project-tags { gap: .35rem; margin: .85rem 0 1rem; }
+      .project-tags span { font-size: .51rem; padding: .35rem .45rem; }
+      .project-actions .button { min-height: 2.55rem; }
+      .project-scroll-hint { display: none; }
+      .toolkit-track { height: 160svh; }
+      .toolkit-stage { justify-content: center; gap: 3rem; padding: 5.8rem 0 3rem; }
+      .toolkit-heading { grid-template-columns: 1fr; gap: 1.2rem; padding-inline: 1.2rem; }
+      .toolkit-heading h2 { font-size: clamp(2.8rem, 13vw, 5.2rem); }
+      .toolkit-heading p { max-width: 500px; font-size: .82rem; }
+      .toolkit-overflow { padding-block: 1.1rem; }
+      .toolkit-word { font-size: clamp(2rem, 10vw, 4.2rem); }
+      .toolkit-footer { padding-inline: 1.2rem; align-items: flex-start; flex-direction: column; font-size: .54rem; }
+      .about-section { padding: 5.5rem 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .about-heading { font-size: clamp(3rem, 13vw, 5rem); }
+      .about-copy { font-size: .95rem; }
+      .about-facts b { font-size: .82rem; }
+      .contact-section { min-height: 72svh; padding: 5.5rem 1.2rem; }
+      .contact-heading { font-size: clamp(3.3rem, 14vw, 6.2rem); }
+      .contact-text { font-size: .9rem; }
+      .footer { padding: 1.25rem 1.2rem; flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-height: 700px) and (min-width: 761px) {
+      .hero-stage, .journey-stage, .projects-stage, .toolkit-stage { min-height: 620px; }
+      .project-visual { min-height: 310px; height: 48vh; }
+      .projects-stage { padding-top: 5rem; padding-bottom: 3rem; }
+      .project-copy h3 { font-size: clamp(2.7rem, 4.5vw, 4.7rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+    @media (forced-colors: active) {
+      .button, .project-switch, .nav-links a { border: 1px solid ButtonText; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+  <div class="progress-bar" aria-hidden="true"><span id="pageProgress"></span></div>
+  <header class="site-header">
+    <a href="#inicio" class="brand" aria-label="Ángel Gonjar Verdejo, inicio">
+      <span class="brand-mark"><span>AGV</span></span>
+      <span class="brand-copy">ÁNGEL GONJAR<small>SOFTWARE · INTERACTIVE WORLDS</small></span>
+    </a>
+    <button class="nav-toggle" type="button" id="navToggle" aria-expanded="false" aria-controls="navLinks">MENÚ +</button>
+    <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+      <a href="#recorrido">Recorrido</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#herramientas">Stack</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto" class="nav-contact">Hablemos ↗</a>
+    </nav>
+  </header>
+  <aside class="side-index" aria-hidden="true"><span class="active"></span><span></span><span></span><span></span><span></span></aside>
+
+  <main class="site-root" id="contenido" data-sites-preview-theme>
+    <section class="hero-track" id="inicio" aria-label="Introducción">
+      <div class="hero-stage" id="heroStage">
+        <div class="hero-landscape" id="heroLandscape"></div>
+        <div class="hero-shade decorative"></div>
+        <div class="hero-grid decorative"></div>
+        <div class="hero-orb decorative" id="heroOrb"></div>
+        <div class="hero-content" id="heroContent">
+          <div class="hero-main">
+            <div class="eyebrow">Desarrollador de software junior · Tenerife</div>
+            <h1 class="display-title hero-title">Código con lógica.<span class="second-line">Mundos con <span class="italic">intención.</span></span></h1>
+            <p class="hero-intro">Soy <strong>Ángel Gonjar Verdejo</strong>. Desarrollo software con foco en backend y me gusta construir experiencias interactivas, desde aplicaciones empresariales hasta videojuegos.</p>
+            <div class="button-row">
+              <a class="button button-primary" href="#proyectos">Explorar proyectos <span aria-hidden="true">↘</span></a>
+              <a class="button" href="https://www.linkedin.com/in/%C3%A1ngel-gonjar-verdejo-91b63a329/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            </div>
+          </div>
+          <aside class="hero-side" aria-label="Especialidades">
+            <div class="coordinates">
+              <div><b>01 / Backend</b><span>Java · Spring Boot · SQL</span></div>
+              <div><b>02 / Interactive</b><span>Unity 6 · C#</span></div>
+              <div><b>03 / Learning</b><span>Máster en desarrollo de videojuegos</span></div>
+            </div>
+          </aside>
+        </div>
+        <div class="hero-bottom"><span class="micro">Portfolio personal · 2026</span><span class="scroll-cue"><i></i> Desplázate para entrar</span><span>01 — Inicio</span></div>
+      </div>
+    </section>
+
+    <section class="journey-track" id="recorrido" aria-label="Recorrido profesional">
+      <div class="journey-stage" id="journeyStage" data-scene="0">
+        <div class="journey-left">
+          <div class="eyebrow">El camino hasta aquí</div>
+          <h2 class="section-heading">Cada etapa deja<br>una <em>capa nueva.</em></h2>
+          <p class="journey-copy" id="journeyCopy" aria-live="polite">Una base en ingeniería del software, práctica con aplicaciones empresariales y una nueva etapa centrada en crear videojuegos.</p>
+          <div class="journey-data"><div><b id="journeyDate">2022 — 2026</b><span id="journeyLabel">Formación universitaria</span></div><div><b id="journeyPlace">Alicante</b><span id="journeyType">Ingeniería Informática</span></div></div>
+          <div class="button-row journey-actions"><a href="#sobre-mi" class="button">Conocer más ↘</a></div>
+        </div>
+        <div class="journey-art" aria-hidden="true">
+          <svg class="route-geometry" viewBox="0 0 520 560" role="presentation">
+            <path class="route-line-glow" d="M72,474 C200,430 75,338 208,288 S244,151 398,78"/>
+            <path class="route-line" d="M72,474 C200,430 75,338 208,288 S244,151 398,78"/>
+            <circle class="route-node active" id="node0" cx="72" cy="474" r="8"/><circle class="route-node" id="node1" cx="208" cy="288" r="8"/><circle class="route-node" id="node2" cx="398" cy="78" r="8"/>
+            <text class="route-label" x="34" y="511">ALICANTE</text><text class="route-label" x="226" y="282">I2E · PRÁCTICAS</text><text class="route-label" x="330" y="54">TENERIFE · MÁSTER</text>
+            <path d="M55 90 L130 90 M92 53 L92 127 M346 390 L440 390 M393 343 L393 437" stroke="rgba(242,238,231,.12)" fill="none"/>
+          </svg>
+          <div class="route-card" id="journeyCard">
+            <div class="card-number"><span id="journeyCardNo">CAPÍTULO 01</span><span>AGV / LOG</span></div>
+            <h3 id="journeyCardTitle">Ingeniería Informática</h3>
+            <p id="journeyCardText">Una base en ingeniería del software, programación y diseño de sistemas.</p>
+          </div>
+        </div>
+        <div class="journey-footer"><span>Un recorrido, varias perspectivas</span><span class="chapter-count" id="journeyCount">01 / 03</span><span>Scroll para cambiar de capítulo ↓</span></div>
+      </div>
+      <div class="journey-steps" aria-hidden="true"><i class="journey-step"></i><i class="journey-step"></i><i class="journey-step"></i></div>
+    </section>
+
+    <section class="projects-track" id="proyectos" aria-label="Proyectos destacados">
+      <div class="projects-stage" id="projectsStage" data-project="0">
+        <aside class="project-rail">
+          <div class="eyebrow">Selección de trabajo</div>
+          <h2>Hecho para<br><span class="accent">explorarlo.</span></h2>
+          <div class="project-switches" id="projectSwitches" role="group" aria-label="Seleccionar proyecto">
+            <button type="button" class="project-switch active" data-index="0" aria-pressed="true"><span class="switch-number">01</span><span>Skagos</span><span class="switch-arrow">↗</span></button>
+            <button type="button" class="project-switch" data-index="1" aria-pressed="false"><span class="switch-number">02</span><span>Chaos Crew</span><span class="switch-arrow">↗</span></button>
+            <button type="button" class="project-switch" data-index="2" aria-pressed="false"><span class="switch-number">03</span><span>Hackatón de Aguas</span><span class="switch-arrow">↗</span></button>
+          </div>
+          <p class="project-rail-note">Proyectos propios y colaboraciones, con la autoría diferenciada.</p>
+        </aside>
+        <article class="project-detail" aria-live="polite" aria-atomic="true">
+          <div class="project-visual-wrap" id="projectVisualWrap">
+            <div class="project-visual" id="projectVisual">
+              <img id="projectImage" src="assets/skagos-cover.webp" alt="Arte de portada de Skagos" loading="eager">
+              <div class="visual-art art-chaos" id="artChaos" hidden></div>
+              <div class="visual-art art-water" id="artWater" hidden><div class="water-rings"></div><div class="water-drop"></div></div></div>
+              <div class="visual-topline"><span id="visualType">TRABAJO FIN DE GRADO</span><span id="visualNumber">01 / 03</span></div>
+              <span class="visual-credit" id="visualCredit">ARTE DE SKAGOS</span>
+              <div class="visual-bottomline"><b id="visualTitle">SKAGOS</b><span id="visualCaption">UNITY 6<br>C# · 2D RPG</span></div>
+            </div>
+          </div>
+          <div class="project-copy">
+            <div class="project-kicker" id="projectKicker">01 / PROYECTO PROPIO</div>
+            <h3 id="projectTitle">Skagos</h3>
+            <p class="project-subtitle" id="projectSubtitle">RPG de acción 2D · Unity 6 · C#</p>
+            <p class="project-summary" id="projectSummary">Videojuego de acción 2D con perspectiva cenital, desarrollado como Trabajo Fin de Grado. Apliqué patrones de diseño para estructurar los sistemas del juego.</p>
+            <div class="project-tags" id="projectTags"><span>Unity 6</span><span>C#</span><span>Patrones de diseño</span><span>Git</span></div>
+            <div class="project-actions" id="projectActions"><a class="button button-primary" href="https://agv114-ua.itch.io/skagos" target="_blank" rel="noreferrer">Jugar en itch.io ↗</a><a class="button" href="https://github.com/agv114-ua" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            <p class="project-personal-note" id="projectNote"></p>
+          </div>
+        </article>
+        <div class="project-scroll-hint">Sigue bajando para cambiar de proyecto ↓</div>
+      </div>
+    </section>
+
+    <section class="toolkit-track" id="herramientas" aria-label="Tecnologías">
+      <div class="toolkit-stage" id="toolkitStage">
+        <div class="toolkit-heading">
+          <div><div class="eyebrow">Herramientas de trabajo</div><h2>Una caja de<br><span class="italic">herramientas.</span></h2></div>
+          <p>Backend, calidad del software y desarrollo interactivo. Tecnologías utilizadas en prácticas, formación y proyectos personales o colaborativos.</p>
+        </div>
+        <div class="toolkit-overflow"><div class="toolkit-strip" id="toolkitStrip"><span class="toolkit-word">Java</span><i class="toolkit-dot"></i><span class="toolkit-word">Spring Boot</span><i class="toolkit-dot"></i><span class="toolkit-word">SQL</span><i class="toolkit-dot"></i><span class="toolkit-word">Hibernate</span><i class="toolkit-dot"></i><span class="toolkit-word">JUnit</span><i class="toolkit-dot"></i><span class="toolkit-word">Git</span><i class="toolkit-dot"></i><span class="toolkit-word">HTML</span><i class="toolkit-dot"></i><span class="toolkit-word">CSS</span><i class="toolkit-dot"></i><span class="toolkit-word">JavaScript</span><i class="toolkit-dot"></i><span class="toolkit-word">Unity 6</span><i class="toolkit-dot"></i><span class="toolkit-word">C#</span><i class="toolkit-dot"></i><span class="toolkit-word">Python</span><i class="toolkit-dot"></i><span class="toolkit-word">Java</span><i class="toolkit-dot"></i><span class="toolkit-word">Spring Boot</span><i class="toolkit-dot"></i><span class="toolkit-word">SQL</span><i class="toolkit-dot"></i><span class="toolkit-word">Hibernate</span><i class="toolkit-dot"></i><span class="toolkit-word">JUnit</span><i class="toolkit-dot"></i><span class="toolkit-word">Git</span><i class="toolkit-dot"></i><span class="toolkit-word">HTML</span><i class="toolkit-dot"></i><span class="toolkit-word">CSS</span><i class="toolkit-dot"></i><span class="toolkit-word">JavaScript</span><i class="toolkit-dot"></i><span class="toolkit-word">Unity 6</span><i class="toolkit-dot"></i><span class="toolkit-word">C#</span><i class="toolkit-dot"></i><span class="toolkit-word">Python</span></div></div>
+        <div class="toolkit-footer"><span>01 — Backend & calidad</span><span>02 — Web: <b>HTML · CSS · JavaScript</b></span><span>03 — Interactive: <b>Unity · C#</b></span></div>
+      </div>
+    </section>
+
+    <section class="about-section" id="sobre-mi">
+      <div class="about-grid">
+        <div class="reveal"><div class="eyebrow">Sobre mí</div><h2 class="about-heading">Curiosidad<br>con <em>método.</em></h2><p class="micro">INGENIERÍA · SOFTWARE · EXPERIENCIAS INTERACTIVAS</p></div>
+        <div class="reveal">
+          <p class="about-copy">Soy graduado en <strong>Ingeniería Informática por la Universidad de Alicante</strong> y actualmente curso el <strong>Máster en Desarrollo de Videojuegos en la Universidad de La Laguna</strong>. En mis prácticas en I2e participé en el desarrollo y mantenimiento de aplicaciones empresariales con Java, Spring Boot, Hibernate y GWT, además de pruebas con JUnit y resolución de incidencias.</p>
+          <p class="about-copy">Me interesa escribir software comprensible, aprender buenas prácticas y entender cómo se conectan los sistemas. En paralelo, disfruto llevando esas ideas al desarrollo de videojuegos, donde el diseño técnico se convierte en una experiencia que se puede jugar.</p>
+          <div class="about-facts"><div><small>Formación</small><b>Ingeniería Informática · UA</b></div><div><small>Actualmente</small><b>Máster · ULL (2026–2027)</b></div><div><small>Experiencia</small><b>Prácticas en I2e · 2025</b></div><div><small>Idiomas</small><b>Español nativo · Inglés B1</b></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contacto">
+      <div class="eyebrow">Siguiente capítulo</div>
+      <h2 class="contact-heading">Hagamos algo<br><span class="accent">que importe.</span></h2>
+      <p class="contact-text">¿Tienes una oportunidad junior, un proyecto colaborativo o quieres hablar de desarrollo de software y videojuegos? Escríbeme o visita mis perfiles.</p>
+      <div class="contact-links"><a class="button button-primary" href="mailto:gonjarangelverdejo290504@gmail.com">Escribir un correo ↗</a><a class="button" href="https://www.linkedin.com/in/%C3%A1ngel-gonjar-verdejo-91b63a329/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a class="button" href="https://github.com/agv114-ua" target="_blank" rel="noreferrer">GitHub ↗</a><a class="button" href="https://agv114-ua.itch.io/skagos" target="_blank" rel="noreferrer">Skagos en itch.io ↗</a></div>
+    </section>
+    <footer class="footer"><span>© <span id="currentYear">2026</span> Ángel Gonjar Verdejo</span><span>Diseñado para moverse. Construido para actualizarse.</span><div class="footer-links"><a href="https://github.com/agv114-ua" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/%C3%A1ngel-gonjar-verdejo-91b63a329/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:gonjarangelverdejo290504@gmail.com">Email</a></div></footer>
+  </main>
+
+  <script>
+    (() => {
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const story = [
+        {
+          date: '2022 — 2026', label: 'Grado universitario', place: 'Alicante', type: 'Ingeniería Informática',
+          copy: 'Una base en ingeniería del software: programación, diseño de sistemas y resolución de problemas desde una perspectiva estructurada.',
+          title: 'Ingeniería Informática', text: 'La base: aprender a modelar problemas, diseñar soluciones y construir software mantenible.'
+        },
+        {
+          date: 'OCT — DIC 2025', label: 'Prácticas académicas', place: 'I2e · Alicante', type: 'Desarrollo de software',
+          copy: 'Experiencia práctica en aplicaciones empresariales: implementación de funcionalidades, pruebas con JUnit, resolución de incidencias y trabajo con GitHub Flow.',
+          title: 'De la teoría al equipo', text: 'Aplicaciones empresariales con Java, Spring Boot, Hibernate y GWT, en colaboración con un equipo de desarrollo.'
+        },
+        {
+          date: '2026 — 2027', label: 'Máster en curso', place: 'La Laguna', type: 'Desarrollo de Videojuegos',
+          copy: 'Una nueva etapa para profundizar en el desarrollo de videojuegos y seguir conectando arquitectura de software con experiencias interactivas.',
+          title: 'El siguiente capítulo', text: 'Ampliar herramientas, experimentar con sistemas de juego y seguir desarrollando criterio técnico.'
+        }
+      ];
+      const projectData = [
+        {
+          id:'skagos', title:'Skagos', kicker:'01 / PROYECTO PROPIO · TFG', subtitle:'RPG de acción 2D · perspectiva cenital',
+          summary:'Videojuego de acción 2D desarrollado con Unity 6 y C# como Trabajo Fin de Grado. Apliqué patrones de diseño para estructurar los sistemas del juego.',
+          tags:['Unity 6','C#','Patrones de diseño','Git'], type:'TRABAJO FIN DE GRADO', visualTitle:'SKAGOS', visualCaption:'UNITY 6<br>C# · 2D RPG', credit:'ARTE DE SKAGOS', img:'assets/skagos-cover.webp', art:'image',
+          actions:[{label:'Jugar en itch.io ↗',href:'https://agv114-ua.itch.io/skagos',primary:true},{label:'GitHub ↗',href:'https://github.com/agv114-ua'}], note:''
+        },
+        {
+          id:'chaos', title:'Chaos Crew', kicker:'02 / PROYECTO COLABORATIVO', subtitle:'Trabajo en equipo · desarrollo interactivo',
+          summary:'Proyecto colaborativo de desarrollo de videojuegos. Contribuí a los entregables, el diseño y la arquitectura del videojuego.',
+          tags:['Colaboración','Desarrollo interactivo','Trabajo en equipo'], type:'PROYECTO COLABORATIVO', visualTitle:'CHAOS CREW', visualCaption:'EQUIPO<br>PROYECTO COMPARTIDO', credit:'VISUAL CONCEPTUAL', art:'chaos',
+          actions:[{label:'Portfolio del equipo ↗',href:'https://eap-portfolio.vercel.app/',primary:true}], note:''
+        },
+        {
+          id:'agua', title:'Hackatón de Aguas', kicker:'03 / HACKATÓN · EQUIPO', subtitle:'Resolución de un reto en tiempo limitado',
+          summary:'Participación en una hackatón del ámbito del agua, colaborando en la arquitectura de la aplicación.',
+          tags:['Hackatón','Trabajo en equipo','Prototipado'], type:'PROYECTO DE HACKATÓN', visualTitle:'AGUA / RETO', visualCaption:'PROTOTIPO<br>EQUIPO', credit:'VISUAL CONCEPTUAL', art:'water',
+          actions:[], note:''
+        },
+      ];
+
+      let currentStory = -1;
+      let currentProject = -1;
+      let ticking = false;
+
+      function setStory(index) {
+        const item = story[Math.max(0, Math.min(story.length - 1, index))];
+        if (index === currentStory) return;
+        currentStory = index;
+        const stage = $('#journeyStage');
+        stage.dataset.scene = String(index);
+        $('#journeyDate').textContent = item.date;
+        $('#journeyLabel').textContent = item.label;
+        $('#journeyPlace').textContent = item.place;
+        $('#journeyType').textContent = item.type;
+        $('#journeyCopy').textContent = item.copy;
+        $('#journeyCardNo').textContent = `CAPÍTULO 0${index + 1}`;
+        $('#journeyCardTitle').textContent = item.title;
+        $('#journeyCardText').textContent = item.text;
+        $('#journeyCount').textContent = `0${index + 1} / 0${story.length}`;
+        $$('.route-node').forEach((node, i) => node.classList.toggle('active', i === index));
+        const card = $('#journeyCard');
+        if (!reduceMotion) {
+          card.animate([{opacity:.4,transform:'translateY(12px) rotateY(-8deg)'},{opacity:1,transform:'translateY(0) rotateY(-8deg)'}], {duration:380,easing:'cubic-bezier(.2,.7,.2,1)'});
+        }
+      }
+
+      function setProject(index, scrollTo = false) {
+        index = Math.max(0, Math.min(projectData.length - 1, index));
+        if (scrollTo) {
+          const track = $('#proyectos');
+          const maxTravel = track.offsetHeight - window.innerHeight;
+          const ratio = index / projectData.length;
+          window.scrollTo({top: track.offsetTop + maxTravel * ratio + 4, behavior: reduceMotion ? 'auto' : 'smooth'});
+        }
+        if (index === currentProject) return;
+        currentProject = index;
+        const item = projectData[index];
+        $('#projectsStage').dataset.project = String(index);
+        $('#projectTitle').textContent = item.title;
+        $('#projectKicker').textContent = item.kicker;
+        $('#projectSubtitle').textContent = item.subtitle;
+        $('#projectSummary').textContent = item.summary;
+        $('#visualType').textContent = item.type;
+        $('#visualNumber').textContent = `0${index + 1} / 0${projectData.length}`;
+        $('#visualTitle').textContent = item.visualTitle;
+        $('#visualCaption').innerHTML = item.visualCaption;
+        $('#visualCredit').textContent = item.credit;
+        const img = $('#projectImage');
+        const artMap = {chaos:$('#artChaos'),water:$('#artWater')};
+        img.hidden = item.art !== 'image';
+        img.alt = item.art === 'image' ? 'Arte de portada del videojuego Skagos' : '';
+        Object.values(artMap).forEach(el => { el.hidden = true; });
+        if (item.art === 'image') img.src = item.img;
+        else artMap[item.art].hidden = false;
+        $('#projectTags').replaceChildren(...item.tags.map(tag => { const span = document.createElement('span'); span.textContent = tag; return span; }));
+        const actions = $('#projectActions');
+        actions.replaceChildren(...item.actions.map(action => { const a = document.createElement('a'); a.className = `button${action.primary ? ' button-primary' : ''}`; a.href = action.href; a.target = '_blank'; a.rel = 'noreferrer'; a.textContent = action.label; return a; }));
+        const note = $('#projectNote');
+        note.textContent = item.note;
+        note.classList.toggle('visible', Boolean(item.note));
+        $$('.project-switch').forEach((button, i) => {
+          const active = i === index;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        const visual = $('#projectVisual');
+        visual.dataset.artTheme = item.id;
+        if (!reduceMotion) visual.animate([{opacity:.65,transform:'translateY(10px) rotateY(-2deg)'},{opacity:1,transform:'translateY(0) rotateY(-4deg)'}],{duration:420,easing:'cubic-bezier(.2,.7,.2,1)'});
+      }
+
+      function sectionProgress(section) {
+        const rect = section.getBoundingClientRect();
+        const total = section.offsetHeight - window.innerHeight;
+        return total <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / total));
+      }
+      function updateScroll() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        $('#pageProgress').style.width = `${max > 0 ? window.scrollY / max * 100 : 0}%`;
+        const hero = $('#heroStage');
+        const heroTrack = $('#inicio');
+        const heroProgress = sectionProgress(heroTrack);
+        $('#heroLandscape').style.transform = `scale(${1.08 + heroProgress * .17}) translate3d(0, ${heroProgress * 3.5}%, 0)`;
+        $('#heroOrb').style.transform = `translate3d(${heroProgress * -26}px, ${heroProgress * 38}px, 0) scale(${1 + heroProgress * .12})`;
+        $('#heroContent').style.transform = `translate3d(0, ${heroProgress * -55}px, 0)`;
+        $('#heroContent').style.opacity = String(Math.max(.15, 1 - heroProgress * 1.6));
+        const j = sectionProgress($('#recorrido'));
+        setStory(Math.min(story.length - 1, Math.floor(j * story.length)));
+        const p = sectionProgress($('#proyectos'));
+        setProject(Math.min(projectData.length - 1, Math.floor(p * projectData.length)));
+        const t = sectionProgress($('#herramientas'));
+        $('#toolkitStrip').style.transform = `translate3d(${-t * 19}%, 0, 0)`;
+        const sections = ['inicio','recorrido','proyectos','herramientas','contacto'];
+        let active = 0;
+        sections.forEach((id, i) => { const r = document.getElementById(id).getBoundingClientRect(); if (r.top <= window.innerHeight * .47) active = i; });
+        $$('.side-index span').forEach((dot, i) => dot.classList.toggle('active', i === active));
+        ticking = false;
+      }
+      function requestUpdate() { if (!ticking) { ticking = true; window.requestAnimationFrame(updateScroll); } }
+      window.addEventListener('scroll', requestUpdate, {passive:true});
+      window.addEventListener('resize', requestUpdate, {passive:true});
+      $$('.project-switch').forEach(button => button.addEventListener('click', () => setProject(Number(button.dataset.index), true)));
+      $('#currentYear').textContent = String(new Date().getFullYear());
+      const navToggle = $('#navToggle');
+      const navLinks = $('#navLinks');
+      navToggle.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.textContent = open ? 'CERRAR ×' : 'MENÚ +';
+      });
+      $$('#navLinks a').forEach(link => link.addEventListener('click', () => {
+        navLinks.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); navToggle.textContent = 'MENÚ +';
+      }));
+      const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); revealObserver.unobserve(entry.target); } }), {threshold:.12});
+      $$('.reveal').forEach(el => revealObserver.observe(el));
+      if (reduceMotion) { $('#heroLandscape').style.transform = 'scale(1.08)'; $('#heroContent').style.opacity = '1'; }
+      setStory(0); setProject(0); updateScroll();
+    })();
+  </script>
+</body>
+</html>
